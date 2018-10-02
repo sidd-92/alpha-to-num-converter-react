@@ -38,6 +38,31 @@ const styles = {
 };
 
 class Converter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { items: [], text: "" };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({ text: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (!this.state.text.length) {
+      return;
+    }
+    const newItem = {
+      text: this.state.text,
+      id: Date.now()
+    };
+    this.setState(state => ({
+      items: state.items.concat(newItem),
+      text: ""
+    }));
+  }
   render() {
     return (
       <React.Fragment>
@@ -48,6 +73,8 @@ class Converter extends React.Component {
                 <TextField
                   id="standard-name"
                   label="Write Words or Sentences You want to convert"
+                  onChange={this.handleChange}
+                  value={this.state.text}
                   helperText="ABCD or abcd will be converted to 1234"
                   style={styles.textField}
                   fullWidth
@@ -57,6 +84,7 @@ class Converter extends React.Component {
               </Grid>
               <Grid item xs={3}>
                 <Button
+                  onClick={this.handleSubmit}
                   fullWidth
                   variant="extendedFab"
                   aria-label="Convert"
@@ -68,20 +96,24 @@ class Converter extends React.Component {
             </Grid>
           </form>
         </Paper>
-
-        <Paper>
-          <List component="ul">
-            <ListItem button>
-              <ListItemText primary="List 1" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText primary="List 2" />
-            </ListItem>
-            <Divider />
-          </List>
-        </Paper>
+        <Lists items={this.state.items} />
       </React.Fragment>
+    );
+  }
+}
+
+class Lists extends React.Component {
+  render() {
+    return (
+      <Paper>
+        <List component="ul">
+          {this.props.items.map(item => (
+            <ListItem key={item.id} button>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
     );
   }
 }
