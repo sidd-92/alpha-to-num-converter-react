@@ -10,7 +10,7 @@ import {
   Divider,
   ListItemText
 } from "@material-ui/core";
-
+import AddIcon from "@material-ui/icons/Add";
 const styles = {
   root: {
     flexGrow: 1,
@@ -66,7 +66,7 @@ class Converter extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Paper style={{ padding: 20 }}>
+        <Paper style={{ padding: 20, marginTop: 20, marginBottom: 20 }}>
           <form style={styles.container} noValidate autoComplete="off">
             <Grid container spacing={24}>
               <Grid item xs>
@@ -105,15 +105,42 @@ class Converter extends React.Component {
 class Lists extends React.Component {
   render() {
     return (
-      <Paper>
-        <List component="ul">
-          {this.props.items.map(item => (
-            <ListItem key={item.id} button>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
+      <div align="center">
+        {this.props.items.length > 0 ? (
+          <React.Fragment>
+            <List
+              component="ul"
+              style={{
+                backgroundColor: "#f1f8e9",
+                width: "50%"
+              }}>
+              {this.props.items.map(item => (
+                <React.Fragment key={item.id}>
+                  <ListItem button style={{ textAlign: "center" }}>
+                    <ListItemText
+                      disableTypography
+                      style={{ fontSize: "x-large" }}
+                      primary={item.text}
+                    />
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              ))}
+            </List>
+            <Button
+              variant="contained"
+              color="secondary"
+              style={{ marginTop: 10 }}>
+              Add All Numbers
+              <AddIcon style={{ marginLeft: 10 }} />
+            </Button>
+          </React.Fragment>
+        ) : (
+          <Paper style={{ padding: 20 }}>
+            Type Some Text in the Textfield and Click the Button
+          </Paper>
+        )}
+      </div>
     );
   }
 }
