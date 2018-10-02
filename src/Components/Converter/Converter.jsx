@@ -1,6 +1,4 @@
 import React from "react";
-//import Paper from "@material-ui/core/Paper";
-
 import SwapIcon from "@material-ui/icons/SwapHorizontalCircle";
 import {
   Paper,
@@ -9,10 +7,9 @@ import {
   Grid,
   TextField,
   Button,
-  Divider
+  Divider,
+  ListItemText
 } from "@material-ui/core";
-
-import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = {
   root: {
@@ -25,62 +22,68 @@ const styles = {
     backgroundColor: "#97b498"
   },
   button: {
-    margin: 5
+    margin: 15
   },
   extendedIcon: {
     marginRight: 5
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: 10,
+    marginRight: 10
   }
 };
-const Converter = () => {
-  return (
-    <div style={styles.root}>
-      <Grid container spacing={24}>
-        <Grid item xs>
-          <TextField
-            id="outlined-multiline-flexible"
-            label="Label"
-            multiline
-            style={{ margin: 8 }}
-            placeholder="Placeholder"
-            helperText="Full width!"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <ExtButton />
-        </Grid>
-      </Grid>
-      <Paper>
-        <List component="p">
-          <ListItem button>
-            <ListItemText primary="Trash" />
-          </ListItem>
-          <Divider />
-          <ListItem button component="a" href="#simple-list">
-            <ListItemText primary="Spam" />
-          </ListItem>
-        </List>
-      </Paper>
-    </div>
-  );
-};
 
-const ExtButton = () => {
-  return (
-    <Button
-      variant="extendedFab"
-      aria-label="Delete"
-      style={styles.button}
-      fullWidth>
-      <SwapIcon style={styles.extendedIcon} />
-      Convert
-    </Button>
-  );
-};
+class Converter extends React.Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Paper>
+          <form style={styles.container} noValidate autoComplete="off">
+            <Grid container spacing={24}>
+              <Grid item xs>
+                <TextField
+                  id="standard-name"
+                  label="Name"
+                  style={styles.textField}
+                  value="Name"
+                  fullWidth
+                  margin="normal"
+                  multiline
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  size="small"
+                  variant="extendedFab"
+                  aria-label="Convert"
+                  style={styles.button}>
+                  <SwapIcon style={styles.extendedIcon} />
+                  Convert
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Paper>
+
+        <Paper>
+          <List component="ul">
+            <ListItem button>
+              <ListItemText primary="List 1" />
+            </ListItem>
+            <Divider />
+            <ListItem button>
+              <ListItemText primary="List 2" />
+            </ListItem>
+            <Divider />
+          </List>
+        </Paper>
+      </React.Fragment>
+    );
+  }
+}
 
 export default Converter;

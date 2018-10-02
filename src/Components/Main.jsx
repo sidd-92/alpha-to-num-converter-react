@@ -12,14 +12,14 @@ class Main extends React.Component {
     };
 
     return (
-      <div>
+      <React.Fragment>
         <Paper style={styles.root}>
           <Typography align="center" variant="headline" component="h3">
             Alphabet To Number Converter
           </Typography>
         </Paper>
         <Converter />
-      </div>
+      </React.Fragment>
     );
   }
 }
