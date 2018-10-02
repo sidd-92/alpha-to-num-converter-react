@@ -22,7 +22,8 @@ const styles = {
     backgroundColor: "#97b498"
   },
   button: {
-    margin: 15
+    marginRight: 15,
+    marginTop: 15
   },
   extendedIcon: {
     marginRight: 5
@@ -32,8 +33,7 @@ const styles = {
     flexWrap: "wrap"
   },
   textField: {
-    marginLeft: 10,
-    marginRight: 10
+    marginLeft: 12
   }
 };
 
@@ -41,23 +41,23 @@ class Converter extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Paper>
+        <Paper style={{ padding: 20 }}>
           <form style={styles.container} noValidate autoComplete="off">
             <Grid container spacing={24}>
               <Grid item xs>
                 <TextField
                   id="standard-name"
-                  label="Name"
+                  label="Write Words or Sentences You want to convert"
+                  helperText="ABCD or abcd will be converted to 1234"
                   style={styles.textField}
-                  value="Name"
                   fullWidth
                   margin="normal"
                   multiline
                 />
               </Grid>
-              <Grid item>
+              <Grid item xs={3}>
                 <Button
-                  size="small"
+                  fullWidth
                   variant="extendedFab"
                   aria-label="Convert"
                   style={styles.button}>
