@@ -40,7 +40,7 @@ const styles = {
 class Converter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], text: "" };
+    this.state = { items: [], text: "", total: 0 };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -103,11 +103,12 @@ class Converter extends React.Component {
     }
     return numString;
   }
-
   addAllHandler = () => {
-    console.log("Add All");
+    let total = 0;
+    for (let i = 0; i < this.state.items.length; i++) {
+      total = parseInt(this.state.items[i].text) + total;
+    }
   };
-
   render() {
     return (
       <React.Fragment>
@@ -142,6 +143,16 @@ class Converter extends React.Component {
           </form>
         </Paper>
         <Lists items={this.state.items} />
+        {this.state.items.length > 0 ? (
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginTop: 10 }}
+            onClick={this.addAllHandler}>
+            Add All Numbers
+            <AddIcon style={{ marginLeft: 10 }} />
+          </Button>
+        ) : null}
       </React.Fragment>
     );
   }
@@ -172,14 +183,6 @@ class Lists extends React.Component {
                 </React.Fragment>
               ))}
             </List>
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{ marginTop: 10 }}
-              onClick={this.addAllHandler}>
-              Add All Numbers
-              <AddIcon style={{ marginLeft: 10 }} />
-            </Button>
           </React.Fragment>
         ) : (
           <Paper style={{ padding: 20 }}>
