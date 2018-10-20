@@ -1,41 +1,30 @@
 import React from "react";
-//import SwapIcon from "@material-ui/icons/SwapHorizontalCircle";
+import SwapIcon from "@material-ui/icons/SwapHorizontalCircle";
+import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
 import {
 	Paper,
-	List,
-	ListItem,
-	Grid,
-	Divider,
-	ListItemText
+	TextField,
+	Button,
+	Card,
+	CardContent,
+	Typography,
+	CardActions,
+	Grid
 } from "@material-ui/core";
 
-import Typography from "@material-ui/core/Typography";
-import ButtonBase from "@material-ui/core/ButtonBase";
-//import AddIcon from "@material-ui/icons/Add";
 const styles = theme => ({
 	root: {
-		flexGrow: 1,
-		marginTop: 20
+		flexGrow: 1
 	},
 	paper: {
-		padding: 10,
 		textAlign: "center",
-		backgroundColor: "#97b498"
-	},
-	button: {
-		marginRight: 15,
-		marginTop: 15
-	},
-	extendedIcon: {
-		marginRight: 5
-	},
-	container: {
-		display: "flex",
-		flexWrap: "wrap"
+		color: theme.palette.text.secondary
 	},
 	textField: {
-		marginLeft: 12
+		marginLeft: theme.spacing.unit,
+		marginRight: theme.spacing.unit,
+		width: 200
 	}
 });
 
@@ -88,42 +77,35 @@ class Converter extends React.Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<Paper className={classes.root}>
-				<Grid container spacing={16}>
-					<Grid item>
-						<ButtonBase className={classes.image}>
-							<img
-								className={classes.img}
-								alt="complex"
-								src="/static/images/grid/complex.jpg"
-							/>
-						</ButtonBase>
-					</Grid>
-					<Grid item xs={12} sm container>
-						<Grid item xs container direction="column" spacing={16}>
-							<Grid item xs>
-								<Typography gutterBottom variant="subtitle1">
-									Standard license
-								</Typography>
-								<Typography gutterBottom>
-									Full resolution 1920x1080 • JPEG
-								</Typography>
-								<Typography color="textSecondary">ID: 1030114</Typography>
-							</Grid>
-							<Grid item>
-								<Typography style={{ cursor: "pointer" }}>Remove</Typography>
-							</Grid>
-						</Grid>
-						<Grid item>
-							<Typography variant="subtitle1">$19.00</Typography>
-						</Grid>
-					</Grid>
+			<Grid container spacing={24}>
+				<Grid item xs>
+					<Paper className={classes.paper}>
+						<TextField
+							label="Dense"
+							id="margin-dense"
+							defaultValue="Default Value"
+							className={classes.textField}
+							helperText="Some important text"
+							margin="normal"
+						/>
+						<Button variant="fab" style={{ margin: "20px" }}>
+							<SwapIcon />
+						</Button>
+						<TextField
+							label="Dense"
+							id="margin-dense"
+							defaultValue="Default Value"
+							className={classes.textField}
+							helperText="Some important text"
+							margin="normal"
+						/>
+					</Paper>
 				</Grid>
-			</Paper>
+			</Grid>
 		);
 	}
 }
-
+/*
 class Lists extends React.Component {
 	render() {
 		return (
@@ -159,5 +141,5 @@ class Lists extends React.Component {
 		);
 	}
 }
-
+*/
 export default withStyles(styles)(Converter);
