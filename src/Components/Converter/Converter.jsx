@@ -1,145 +1,151 @@
 import React from "react";
-import SwapIcon from "@material-ui/icons/SwapHorizontalCircle";
-import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
-import {
-	Paper,
-	TextField,
-	Button,
-	Card,
-	CardContent,
-	Typography,
-	CardActions,
-	Grid
-} from "@material-ui/core";
-
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import { Typography } from "@material-ui/core";
 const styles = theme => ({
-	root: {
-		flexGrow: 1
-	},
-	paper: {
-		textAlign: "center",
-		color: theme.palette.text.secondary
-	},
-	textField: {
-		marginLeft: theme.spacing.unit,
-		marginRight: theme.spacing.unit,
-		width: 200
+	fabButton: {
+		position: "absolute",
+		top: 60,
+		left: 0,
+		right: 0,
+		margin: "0 auto"
 	}
 });
-
 class Converter extends React.Component {
-	convertToNumber(text) {
-		let alphaNum = {
-			a: "1",
-			b: "2",
-			c: "3",
-			d: "4",
-			e: "5",
-			f: "6",
-			g: "7",
-			h: "8",
-			i: "9",
-			j: "10",
-			k: "11",
-			l: "12",
-			m: "13",
-			n: "14",
-			o: "15",
-			p: "16",
-			q: "17",
-			r: "18",
-			s: "19",
-			t: "20",
-			u: "21",
-			v: "22",
-			w: "23",
-			x: "24",
-			y: "25",
-			z: "26"
-		};
+	state = {
+		open: false,
+		names: [],
+		name: ""
+	};
 
-		let splitText = text.split("");
-		let numString = "";
-		for (let i = 0; i < splitText.length; i++) {
-			if (splitText[i].toLowerCase() in alphaNum) {
-				numString += alphaNum[splitText[i].toLowerCase()];
-			}
-		}
-		return numString;
-	}
-	addAllHandler = () => {
-		let total = 0;
-		for (let i = 0; i < this.state.items.length; i++) {
-			total = parseInt(this.state.items[i].text) + total;
-		}
+	handleClickOpen = () => {
+		this.setState({ open: true, name: "" });
+	};
+
+	handleClose = () => {
+		this.setState({ open: false });
+	};
+
+	handleSubmit = e => {
+		let a = this.state.names.slice(); //creates the clone of the state
+		a.push(this.state.name);
+		this.setState({ names: a, open: false });
+		e.preventDefault();
+	};
+	handleChange = name => event => {
+		this.setState({
+			[name]: event.target.value
+		});
 	};
 	render() {
 		const { classes } = this.props;
+		console.log(this.state.names);
 		return (
-			<Grid container spacing={24}>
-				<Grid item xs>
-					<Paper className={classes.paper}>
+			<React.Fragment>
+				<Button
+					variant="fab"
+					color="primary"
+					aria-label="Add"
+					className={classes.fabButton}
+					onClick={this.handleClickOpen}>
+					<AddIcon />
+				</Button>
+				<Dialog
+					open={this.state.open}
+					onClose={this.handleClose}
+					aria-labelledby="form-dialog-title">
+					<DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							To subscribe to this website, please enter your email address
+							here. We will send updates occasionally.
+						</DialogContentText>
 						<TextField
-							label="Dense"
-							id="margin-dense"
-							defaultValue="Default Value"
-							className={classes.textField}
-							helperText="Some important text"
-							margin="normal"
+							autoFocus
+							margin="dense"
+							id="name"
+							value={this.state.name}
+							label="Email Address"
+							type="email"
+							onChange={this.handleChange("name")}
+							fullWidth
 						/>
-						<Button variant="fab" style={{ margin: "20px" }}>
-							<SwapIcon />
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={this.handleClose} color="primary">
+							Cancel
 						</Button>
-						<TextField
-							label="Dense"
-							id="margin-dense"
-							defaultValue="Default Value"
-							className={classes.textField}
-							helperText="Some important text"
-							margin="normal"
-						/>
-					</Paper>
-				</Grid>
-			</Grid>
-		);
-	}
-}
-/*
-class Lists extends React.Component {
-	render() {
-		return (
-			<div align="center">
-				{this.props.items.length > 0 ? (
-					<React.Fragment>
-						<List
-							component="ul"
-							style={{
-								backgroundColor: "#f1f8e9",
-								width: "50%"
-							}}>
-							{this.props.items.map(item => (
-								<React.Fragment key={item.id}>
-									<ListItem button style={{ textAlign: "center" }}>
-										<ListItemText
-											disableTypography
-											style={{ fontSize: "x-large" }}
-											primary={item.text}
-										/>
-									</ListItem>
-									<Divider />
-								</React.Fragment>
-							))}
-						</List>
-					</React.Fragment>
+						<Button onClick={this.handleSubmit} color="primary">
+							Subscribe
+						</Button>
+					</DialogActions>
+				</Dialog>
+				{this.state.name === "" ? (
+					<Typography variant="body2" color="inherit">
+						Click on the add button
+					</Typography>
 				) : (
-					<Paper style={{ padding: 20 }}>
-						Type Some Text in the Textfield and Click the Button
-					</Paper>
+					<Typography variant="h6" color="inherit">
+						{this.state.names.length > 0
+							? this.state.names.map(name => <CardList word={name} />)
+							: null}
+					</Typography>
 				)}
-			</div>
+			</React.Fragment>
 		);
 	}
 }
-*/
+
+const CardList = ({ word }) => {
+	return <p>CardList : {word}</p>;
+};
+
 export default withStyles(styles)(Converter);
+/*
+let convertToNumber = text => {
+	let alphaNum = {
+		a: "1",
+		b: "2",
+		c: "3",
+		d: "4",
+		e: "5",
+		f: "6",
+		g: "7",
+		h: "8",
+		i: "9",
+		j: "10",
+		k: "11",
+		l: "12",
+		m: "13",
+		n: "14",
+		o: "15",
+		p: "16",
+		q: "17",
+		r: "18",
+		s: "19",
+		t: "20",
+		u: "21",
+		v: "22",
+		w: "23",
+		x: "24",
+		y: "25",
+		z: "26"
+	};
+
+	let splitText = text.split("");
+	let numString = "";
+	for (let i = 0; i < splitText.length; i++) {
+		if (splitText[i].toLowerCase() in alphaNum) {
+			numString += alphaNum[splitText[i].toLowerCase()];
+		}
+	}
+	return numString;
+};
+*/
